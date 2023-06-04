@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{2fbca813-ba41-4ddc-aca2-2e6ed1e8f518}</ProjectGuid>
-    <RootNamespace>ProgramacionClase1</RootNamespace>
+    <ProjectGuid>{2bb11600-e60e-4902-98ff-c3ae2b2939aa}</ProjectGuid>
+    <RootNamespace>TareaBuscar</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,11 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Array.cpp" />
-    <ClCompile Include="ProgramacionClase1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Array.h" />
+    <ClCompile Include="Tarea-Buscar.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
