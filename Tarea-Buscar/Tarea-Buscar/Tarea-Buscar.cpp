@@ -1,62 +1,32 @@
-// Tarea-Buscar.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
-// Búsqueda
-// Es decir, iterar en los N elementos del RawArray en busca de un valor X, si algúno de los elementos es igual a X, retornar verdadero, si no, retornar falso.
-
+#include "array.h"
 #include <iostream>
 
-bool buscarValor(int* rawArray, int N, int X) {
-    // Iterar a través de los N elementos del RawArray
-    for (int i = 0; i < N; i++) {
+int main() {
+    // Obtener el tamaño del arreglo desde la entrada estándar
+    int size;
+    std::cout << "Ingresa el tamaño del arreglo: ";
+    std::cin >> size;
 
-        // Comprobar si el elemento actual es igual al valor buscado (X)
-        if (rawArray[i] == X) {
-            // Si hay una coincidencia, retornar verdadero
-            return true;
-        }
-    }
-    // Si no se encuentra ninguna coincidencia, retornar falso
-    return false;
-}
+    // Crear una instancia de la clase RawArray
+    RawArray myArray(size);
 
-int main()
-{
-    int N;
-    std::cout << "Ingrese el tamaño del RawArray: ";
+    // Mostrar los elementos del arreglo
+    std::cout << "Los elementos del arreglo son: ";
+    myArray.Print();
 
-    // Solicitar al usuario ingresar el tamaño del RawArray
-    std::cin >> N;
+    // Valor a buscar
+    int valorBuscado;
+    std::cout << "Ingresa el valor a buscar: ";
+    std::cin >> valorBuscado;
 
-    // Asignar memoria dinámica para el RawArray con tamaño N
-    int* rawArray = new int[N];
-
-    std::cout << "Ingrese los " << N << " elementos del RawArray: ";
-    for (int i = 0; i < N; i++) {
-
-        // Solicitar al usuario ingresar los N elementos del RawArray uno por uno
-        std::cin >> rawArray[i];
-    }
-
-    int X;
-    std::cout << "Ingrese el valor a buscar: ";
-
-    // Solicitar al usuario ingresar el valor a buscar
-    std::cin >> X;
-
-    // Llamar a la función buscarValor
-    bool encontrado = buscarValor(rawArray, N, X);
-
+    // Llamar a la función BuscarValor y mostrar el resultado
+    bool encontrado = myArray.BuscarValor(valorBuscado);
     if (encontrado) {
-        std::cout << "El valor " << X << " se encuentra en el RawArray." << std::endl;
+        std::cout << "El valor " << valorBuscado << " ha sido encontrado." << std::endl;
     }
     else {
-        std::cout << "El valor " << X << " no se encuentra en el RawArray." << std::endl;
+        std::cout << "El valor " << valorBuscado << " no ha sido encontrado." << std::endl;
     }
 
-    // Liberar la memoria asignada para el RawArray
-    delete[] rawArray;
-
     return 0;
-
 }
