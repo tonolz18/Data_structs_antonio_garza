@@ -2,9 +2,9 @@
 #include <iostream>
 
 int main() {
-    // Obtener el tamaÃ±o del arreglo desde la entrada estÃ¡ndar
+    // Obtener el tamaño del arreglo desde la entrada estándar
     int size;
-    std::cout << "Ingresa el tamaÃ±o del arreglo: ";
+    std::cout << "Ingresa el tamaño del arreglo: ";
     std::cin >> size;
 
     // Crear una instancia de la clase RawArray
@@ -19,7 +19,7 @@ int main() {
     std::cout << "Ingresa el valor a buscar: ";
     std::cin >> valorBuscado;
 
-    // Llamar a la funciÃ³n BuscarValor y mostrar el resultado
+    // Llamar a la función BuscarValor y mostrar el resultado
     bool encontrado = myArray.BuscarValor(valorBuscado);
     if (encontrado) {
         std::cout << "El valor " << valorBuscado << " ha sido encontrado." << std::endl;
