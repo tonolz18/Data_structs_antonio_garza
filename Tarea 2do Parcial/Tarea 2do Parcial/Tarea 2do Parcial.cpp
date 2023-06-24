@@ -1,10 +1,88 @@
-#include "deque.h"
 #include <iostream>
-
 using namespace std;
 
+const int MAX_SIZE = 10;
+
+template <class T>
+class Queue {
+private:
+    T queue[MAX_SIZE];
+    int head;
+    int tail;
+
+public:
+    Queue() {
+        head = 0;
+        tail = -1;
+    }
+
+    bool isFull() {
+        return tail == MAX_SIZE - 1;
+    }
+
+    bool isEmpty() {
+        return head > tail;
+    }
+
+    void FrontEnqueue(T element) {
+        if (isFull()) {
+            cout << "Error: La cola está llena." << endl;
+            return;
+        }
+
+        for (int i = tail; i >= head; i--) {
+            queue[i + 1] = queue[i];
+        }
+
+        queue[head] = element;
+        tail++;
+    }
+
+    void BackDequeue() {
+        if (isEmpty()) {
+            cout << "Error: La cola está vacía." << endl;
+            return;
+        }
+
+        tail--;
+    }
+
+    T Front() {
+        if (isEmpty()) {
+            cout << "Error: La cola está vacía." << endl;
+            return T();
+        }
+
+        return queue[head];
+    }
+
+    T Back() {
+        if (isEmpty()) {
+            cout << "Error: La cola está vacía." << endl;
+            return T();
+        }
+
+        return queue[tail];
+    }
+
+    void Print() {
+        if (isEmpty()) {
+            cout << "Vacio" << endl;
+            return;
+        }
+
+        for (int i = head; i <= tail; i++) {
+            cout << queue[i];
+            if (i != tail) {
+                cout << ", ";
+            }
+        }
+        cout << endl;
+    }
+};
+
 int main() {
-    Deque<char> q;
+    Queue<char> q;
 
     q.FrontEnqueue('a'); // Ejemplo A
     q.FrontEnqueue('b');
@@ -32,4 +110,3 @@ int main() {
 
     return 0;
 }
-
