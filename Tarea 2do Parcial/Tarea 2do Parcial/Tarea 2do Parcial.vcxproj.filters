@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Deque.cpp">
+    <ClCompile Include="Tarea 2do Parcial.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

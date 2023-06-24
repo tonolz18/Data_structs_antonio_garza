@@ -24,7 +24,7 @@ bool Deque<T>::isEmpty() {
 template <class T>
 void Deque<T>::FrontEnqueue(T element) {
     if (isFull()) {
-        cout << "Error: La cola estÃ¡ llena." << endl;
+        cout << "Error: La cola está llena." << endl;
         return;
     }
 
@@ -39,7 +39,7 @@ void Deque<T>::FrontEnqueue(T element) {
 template <class T>
 void Deque<T>::BackDequeue() {
     if (isEmpty()) {
-        cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
+        cout << "Error: La cola está vacía." << endl;
         return;
     }
 
@@ -49,7 +49,7 @@ void Deque<T>::BackDequeue() {
 template <class T>
 T Deque<T>::Front() {
     if (isEmpty()) {
-        cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
+        cout << "Error: La cola está vacía." << endl;
         return T();
     }
 
@@ -59,7 +59,7 @@ T Deque<T>::Front() {
 template <class T>
 T Deque<T>::Back() {
     if (isEmpty()) {
-        cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
+        cout << "Error: La cola está vacía." << endl;
         return T();
     }
 
@@ -82,5 +82,5 @@ void Deque<T>::Print() {
     cout << endl;
 }
 
-// Declaraciones explÃ­citas de las instanciaciones de la plantilla
+// Declaraciones explícitas de las instanciaciones de la plantilla
 template class Deque<char>;
