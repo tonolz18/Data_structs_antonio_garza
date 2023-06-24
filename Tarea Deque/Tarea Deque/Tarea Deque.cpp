@@ -26,7 +26,7 @@ public:
 
     void FrontEnqueue(T element) {
         if (isFull()) {
-            cout << "Error: La cola está llena." << endl;
+            cout << "Error: La cola estÃ¡ llena." << endl;
             return;
         }
 
@@ -40,7 +40,7 @@ public:
 
     void BackDequeue() {
         if (isEmpty()) {
-            cout << "Error: La cola está vacía." << endl;
+            cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
             return;
         }
 
@@ -49,7 +49,7 @@ public:
 
     T Front() {
         if (isEmpty()) {
-            cout << "Error: La cola está vacía." << endl;
+            cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
             return T();
         }
 
@@ -58,7 +58,7 @@ public:
 
     T Back() {
         if (isEmpty()) {
-            cout << "Error: La cola está vacía." << endl;
+            cout << "Error: La cola estÃ¡ vacÃ­a." << endl;
             return T();
         }
 

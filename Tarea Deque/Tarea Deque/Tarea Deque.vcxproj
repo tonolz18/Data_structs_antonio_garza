@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{04742B5F-04A5-404C-AFD5-AF3A4D6519E9}</ProjectGuid>
-    <RootNamespace>Tarea2doParcial</RootNamespace>
+    <ProjectGuid>{55c61a10-0b19-4856-b9ad-dadf2396a746}</ProjectGuid>
+    <RootNamespace>TareaDeque</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Tarea 2do Parcial.cpp" />
+    <ClCompile Include="Tarea Deque.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
