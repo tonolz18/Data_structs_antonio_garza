@@ -1,86 +1,114 @@
-#include "deque.h"
-#include <iostream>
-
+ï»¿#include <iostream>
 using namespace std;
 
 const int MAX_SIZE = 10;
 
 template <class T>
-Deque<T>::Deque() {
-    head = 0;
-    tail = -1;
-}
+class Queue {
+private:
+    T queue[MAX_SIZE]; // Arreglo para almacenar los elementos de la cola
+    int head; // ï¿½ndice de la cabeza de la cola
+    int tail; // ï¿½ndice de la cola
 
-template <class T>
-bool Deque<T>::isFull() {
-    return tail == MAX_SIZE - 1;
-}
-
-template <class T>
-bool Deque<T>::isEmpty() {
-    return head > tail;
-}
-
-template <class T>
-void Deque<T>::FrontEnqueue(T element) {
-    if (isFull()) {
-        cout << "Error: La cola está llena." << endl;
-        return;
+public:
+    Queue() {
+        head = 0; // Inicializar la cabeza en el primer ï¿½ndice del arreglo
+        tail = -1; // Inicializar la cola en -1 para indicar que estï¿½ vacï¿½a
     }
 
-    for (int i = tail; i >= head; i--) {
-        deque[i + 1] = deque[i];
+    bool isFull() {
+        return tail == MAX_SIZE - 1; // Comprobar si la cola estï¿½ llena
     }
 
-    deque[head] = element;
-    tail++;
-}
-
-template <class T>
-void Deque<T>::BackDequeue() {
-    if (isEmpty()) {
-        cout << "Error: La cola está vacía." << endl;
-        return;
+    bool isEmpty() {
+        return head > tail; // Comprobar si la cola estï¿½ vacï¿½a
     }
 
-    tail--;
-}
-
-template <class T>
-T Deque<T>::Front() {
-    if (isEmpty()) {
-        cout << "Error: La cola está vacía." << endl;
-        return T();
-    }
-
-    return deque[head];
-}
-
-template <class T>
-T Deque<T>::Back() {
-    if (isEmpty()) {
-        cout << "Error: La cola está vacía." << endl;
-        return T();
-    }
-
-    return deque[tail];
-}
-
-template <class T>
-void Deque<T>::Print() {
-    if (isEmpty()) {
-        cout << "Vacio" << endl;
-        return;
-    }
-
-    for (int i = head; i <= tail; i++) {
-        cout << deque[i];
-        if (i != tail) {
-            cout << ", ";
+    void FrontEnqueue(T element) {
+        if (isFull()) {
+            cout << "Error: La cola estï¿½ llena." << endl; // Mostrar un mensaje de error si la cola estï¿½ llena
+            return;
         }
-    }
-    cout << endl;
-}
 
-// Declaraciones explícitas de las instanciaciones de la plantilla
-template class Deque<char>;
+        // Desplazar los elementos existentes hacia la derecha para hacer espacio para el nuevo elemento
+        for (int i = tail; i >= head; i--) {
+            queue[i + 1] = queue[i];
+        }
+
+        queue[head] = element; // Insertar el nuevo elemento en la cabeza de la cola
+        tail++; // Incrementar el ï¿½ndice de la cola
+    }
+
+    void BackDequeue() {
+        if (isEmpty()) {
+            cout << "Error: La cola estï¿½ vacï¿½a." << endl; // Mostrar un mensaje de error si la cola estï¿½ vacï¿½a
+            return;
+        }
+
+        tail--; // Decrementar el ï¿½ndice de la cola para eliminar el ï¿½ltimo elemento
+    }
+
+    T Front() {
+        if (isEmpty()) {
+            cout << "Error: La cola estï¿½ vacï¿½a." << endl; // Mostrar un mensaje de error si la cola estï¿½ vacï¿½a
+            return T();
+        }
+
+        return queue[head]; // Devolver el elemento en la cabeza de la cola
+    }
+
+    T Back() {
+        if (isEmpty()) {
+            cout << "Error: La cola estï¿½ vacï¿½a." << endl; // Mostrar un mensaje de error si la cola estï¿½ vacï¿½a
+            return T();
+        }
+
+        return queue[tail]; // Devolver el ï¿½ltimo elemento en la cola
+    }
+
+    void Print() {
+        if (isEmpty()) {
+            cout << "Vacio" << endl; // Mostrar "Vacio" si la cola estï¿½ vacï¿½a
+            return;
+        }
+
+        // Imprimir los elementos de la cola separados por comas
+        for (int i = head; i <= tail; i++) {
+            cout << queue[i];
+            if (i != tail) {
+                cout << ", ";
+            }
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Queue<char> q;
+
+    q.FrontEnqueue('a'); // Ejemplo A
+    q.FrontEnqueue('b');
+    q.FrontEnqueue('c');
+    q.FrontEnqueue('d');
+    q.FrontEnqueue('e');
+    q.Print();    // Resultado esperado: "a, b, c, d, e"
+
+    q.FrontEnqueue('f'); // Ejemplo B
+    q.BackDequeue();
+    q.Print();    // Resultado esperado: "b, c, d, e, f"
+
+    q.FrontEnqueue('e'); // Ejemplo C
+    q.BackDequeue();
+    q.BackDequeue();
+    q.BackDequeue();
+    q.BackDequeue();
+    q.Print();    // Resultado esperado: "e, f"
+
+    char frontElement = q.Front();
+    cout << "Front Element: " << frontElement << endl;
+
+    char backElement = q.Back();
+    cout << "Back Element: " << backElement << endl;
+
+    return 0;
+}
