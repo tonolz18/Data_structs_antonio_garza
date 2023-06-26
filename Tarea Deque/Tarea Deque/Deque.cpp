@@ -1,114 +1,185 @@
-﻿#include <iostream>
-using namespace std;
-
-const int MAX_SIZE = 10;
-
-template <class T>
-class Queue {
-private:
-    T queue[MAX_SIZE]; // Arreglo para almacenar los elementos de la cola
-    int head; // �ndice de la cabeza de la cola
-    int tail; // �ndice de la cola
-
-public:
-    Queue() {
-        head = 0; // Inicializar la cabeza en el primer �ndice del arreglo
-        tail = -1; // Inicializar la cola en -1 para indicar que est� vac�a
-    }
-
-    bool isFull() {
-        return tail == MAX_SIZE - 1; // Comprobar si la cola est� llena
-    }
-
-    bool isEmpty() {
-        return head > tail; // Comprobar si la cola est� vac�a
-    }
-
-    void FrontEnqueue(T element) {
-        if (isFull()) {
-            cout << "Error: La cola est� llena." << endl; // Mostrar un mensaje de error si la cola est� llena
-            return;
-        }
-
-        // Desplazar los elementos existentes hacia la derecha para hacer espacio para el nuevo elemento
-        for (int i = tail; i >= head; i--) {
-            queue[i + 1] = queue[i];
-        }
-
-        queue[head] = element; // Insertar el nuevo elemento en la cabeza de la cola
-        tail++; // Incrementar el �ndice de la cola
-    }
-
-    void BackDequeue() {
-        if (isEmpty()) {
-            cout << "Error: La cola est� vac�a." << endl; // Mostrar un mensaje de error si la cola est� vac�a
-            return;
-        }
-
-        tail--; // Decrementar el �ndice de la cola para eliminar el �ltimo elemento
-    }
-
-    T Front() {
-        if (isEmpty()) {
-            cout << "Error: La cola est� vac�a." << endl; // Mostrar un mensaje de error si la cola est� vac�a
-            return T();
-        }
-
-        return queue[head]; // Devolver el elemento en la cabeza de la cola
-    }
-
-    T Back() {
-        if (isEmpty()) {
-            cout << "Error: La cola est� vac�a." << endl; // Mostrar un mensaje de error si la cola est� vac�a
-            return T();
-        }
-
-        return queue[tail]; // Devolver el �ltimo elemento en la cola
-    }
-
-    void Print() {
-        if (isEmpty()) {
-            cout << "Vacio" << endl; // Mostrar "Vacio" si la cola est� vac�a
-            return;
-        }
-
-        // Imprimir los elementos de la cola separados por comas
-        for (int i = head; i <= tail; i++) {
-            cout << queue[i];
-            if (i != tail) {
-                cout << ", ";
-            }
-        }
-        cout << endl;
-    }
-};
-
-int main() {
-    Queue<char> q;
-
-    q.FrontEnqueue('a'); // Ejemplo A
-    q.FrontEnqueue('b');
-    q.FrontEnqueue('c');
-    q.FrontEnqueue('d');
-    q.FrontEnqueue('e');
-    q.Print();    // Resultado esperado: "a, b, c, d, e"
-
-    q.FrontEnqueue('f'); // Ejemplo B
-    q.BackDequeue();
-    q.Print();    // Resultado esperado: "b, c, d, e, f"
-
-    q.FrontEnqueue('e'); // Ejemplo C
-    q.BackDequeue();
-    q.BackDequeue();
-    q.BackDequeue();
-    q.BackDequeue();
-    q.Print();    // Resultado esperado: "e, f"
-
-    char frontElement = q.Front();
-    cout << "Front Element: " << frontElement << endl;
-
-    char backElement = q.Back();
-    cout << "Back Element: " << backElement << endl;
-
-    return 0;
+﻿template <typename T>
+Deque<T>::Deque(int size, bool Dynamic) : _size(size), _isDynamic(Dynamic)
+{
+    // Constructor
+    InitialElement = new T[_size];
+    _head = 0;
+    _tail = 0;
+    _currentElements = 0;
 }
+
+// Destructor
+~Deque()
+{
+    delete[] InitialElement;
+}
+
+// Inserta un elemento al final del deque
+void EnqueueBack(T element)
+{
+    if (Full())  // Verifica si el deque está lleno
+    {
+        if (_isDynamic)  // Si es dinámico, se duplica el tamaño del deque
+        {
+            T* AuxPointer = new T[_size * 2];  // Se crea un nuevo arreglo de mayor tamaño
+            for (int i = 0; i < _currentElements; i++)
+            {
+                AuxPointer[i] = InitialElement[(i + _head) % _size];  // Se copian los elementos existentes al nuevo arreglo
+            }
+
+            delete[] InitialElement;  // Se libera la memoria del arreglo original
+            InitialElement = AuxPointer;  // El puntero del arreglo apunta al nuevo arreglo
+            _size = _size * 2;  // Se actualiza el tamaño del deque
+            _head = 0;  // Se actualiza el índice del frente
+            _tail = _currentElements;  // Se actualiza el índice de la parte posterior
+        }
+        std::cout << "Deque llena" << '\n';  // Mensaje de deque lleno
+    }
+
+    InitialElement[_tail] = element;  // Se agrega el elemento al final del deque
+    if (_tail == _size - 1)
+    {
+        _tail = 0;  // Si _tail llega al final del arreglo, se reinicia al inicio
+    }
+    else
+    {
+        _tail++;  // Se incrementa _tail
+    }
+
+    _currentElements++;  // Se incrementa el número de elementos en el deque
+}
+
+// Elimina el elemento del frente del deque
+void FrontDequeue()
+{
+    if (Empty())  // Verifica si el deque está vacío
+    {
+        std::cout << "ERROR, tratando de quitar elementos de la Deque, pero no hay. Underflow." << '\n';  // Mensaje de deque vacío
+        return;
+    }
+
+    _head++;  // Se incrementa _head
+    _head = _head % _size;  // Se ajusta _head si llega al final del arreglo
+    _currentElements--;  // Se decrementa el número de elementos en el deque
+
+    if (_isDynamic)
+    {
+        if (_currentElements <= _size / 4)  // Si el número de elementos es menor o igual a un cuarto del tamaño
+        {
+            T* AuxPointer = new T[_size / 2];  // Se crea un nuevo arreglo con la mitad del tamaño actual
+            for (int i = 0; i < _currentElements; i++)
+            {
+                AuxPointer[i] = InitialElement[(i + _head) % _size];  // Se copian los elementos existentes al nuevo arreglo
+            }
+
+            delete[] InitialElement;  // Se libera la memoria del arreglo original
+            InitialElement = AuxPointer;  // El puntero del arreglo apunta al nuevo arreglo
+            _size = _size / 2;  // Se actualiza el tamaño del deque
+            _head = 0;  // Se actualiza el índice del frente
+            _tail = _currentElements;  // Se actualiza el índice de la parte posterior
+        }
+    }
+}
+
+// Inserta un elemento al frente del deque
+void FrontEnqueue(T element)
+{
+    if (Full())  // Verifica si el deque está lleno
+    {
+        if (_isDynamic)  // Si es dinámico, se duplica el tamaño del deque
+        {
+            T* AuxPointer = new T[_size * 2];  // Se crea un nuevo arreglo de mayor tamaño
+            for (int i = 0; i < _currentElements; i++)
+            {
+                AuxPointer[i] = InitialElement[(i + _head) % _size];  // Se copian los elementos existentes al nuevo arreglo
+            }
+
+            delete[] InitialElement;  // Se libera la memoria del arreglo original
+            InitialElement = AuxPointer;  // El puntero del arreglo apunta al nuevo arreglo
+            _size = _size * 2;  // Se actualiza el tamaño del deque
+            _head = 0;  // Se actualiza el índice del frente
+            _tail = _currentElements;  // Se actualiza el índice de la parte posterior
+        }
+        else
+        {
+            std::cout << "Deque llena" << '\n';  // Mensaje de deque lleno
+            return;
+        }
+    }
+
+    _head--;  // Se decrementa _head
+    if (_head < 0)
+        _head = _size - 1;  // Si _head es menor que cero, se ajusta al final del arreglo
+
+    InitialElement[_head] = element;  // Se agrega el elemento al frente del deque
+    _currentElements++;  // Se incrementa el número de elementos en el deque
+}
+
+// Elimina el elemento de la parte posterior del deque
+void BackDequeue()
+{
+    if (Empty())  // Verifica si el deque está vacío
+    {
+        std::cout << "ERROR, tratando de quitar elementos de la Deque, pero no hay. Underflow." << '\n';  // Mensaje de deque vacío
+        return;
+    }
+
+    _tail--;  // Se decrementa _tail
+    if (_tail < 0)
+        _tail = _size - 1;  // Si _tail es menor que cero, se ajusta al final del arreglo
+
+    _currentElements--;  // Se decrementa el número de elementos en el deque
+}
+
+// Devuelve el elemento del frente del deque
+T Front()
+{
+    if (Empty())  // Verifica si el deque está vacío
+        return T();  // Si está vacío, se devuelve un valor por defecto de tipo T
+
+    return InitialElement[_head];  // Devuelve el elemento del frente del deque
+}
+
+// Devuelve el elemento de la parte posterior del deque
+T Back()
+{
+    if (Empty())  // Verifica si el deque está vacío
+        return T();  // Si está vacío, se devuelve un valor por defecto de tipo T
+
+    int backIndex = _tail - 1;
+    if (backIndex < 0)
+        backIndex = _size - 1;  // Si backIndex es menor que cero, se ajusta al final del arreglo
+
+    return InitialElement[backIndex];  // Devuelve el elemento de la parte posterior del deque
+}
+
+// Verifica si el deque está vacío
+bool Empty()
+{
+    if (_currentElements == 0)
+        return true;
+
+    return false;
+}
+
+// Verifica si el deque está lleno
+bool Full()
+{
+    if (_size == _currentElements)
+        return true;
+
+    return false;
+}
+
+// Imprime los elementos del deque
+void Print()
+{
+    for (int i = 0; i < _currentElements; i++)
+    {
+        std::cout << InitialElement[(i + _head) % _size];  // Imprime los elementos en orden
+        if (i != _currentElements - 1)
+            std::cout << ", ";
+    }
+    std::cout << '\n';
+}
+};
